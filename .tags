@@ -1,0 +1,20 @@
+!_TAG_FILE_FORMAT	2	/extended format; --format=1 will not append ;" to lines/
+!_TAG_FILE_SORTED	1	/0=unsorted, 1=sorted, 2=foldcase/
+!_TAG_PROGRAM_AUTHOR	Darren Hiebert	/dhiebert@users.sourceforge.net/
+!_TAG_PROGRAM_NAME	Exuberant Ctags	//
+!_TAG_PROGRAM_URL	http://ctags.sourceforge.net	/official site/
+!_TAG_PROGRAM_VERSION	5.8	//
+containers	.\warnings.js	/^    var containers = document.querySelectorAll('#warnings_tab > div[data-tab-name="settings"] label');$/;"	v
+ex.uninstall	.\warnings.js	/^    ex.uninstall = function() {$/;"	f
+log	.\warnings.js	/^    var log = ex.storage.getObject('warnings_log', []);$/;"	v
+logMessage	.\warnings.js	/^    function logMessage(message) {$/;"	f
+save	.\warnings.js	/^    function save() {$/;"	f
+sendHelper	.\warnings.js	/^    function sendHelper(message, replace, name) {$/;"	f
+settings	.\warnings.js	/^    var settings = ex.storage.getObject('warnings_settings', {$/;"	v
+warnListener	.\warnings.js	/^    function warnListener(name, command, args) {$/;"	f
+warningHelper.addWarning	.\warnings.js	/^        addWarning: function(name) {$/;"	m
+warningHelper.canWarn	.\warnings.js	/^        canWarn: function(name) {$/;"	m
+warningHelper.getWarns	.\warnings.js	/^        getWarns: function(name) {$/;"	m
+warningHelper.setWarnings	.\warnings.js	/^        setWarnings: function(name, number) {$/;"	m
+warnings	.\warnings.js	/^    var warnings = ex.storage.getObject('warnings_warns', {});$/;"	v
+warnings	.\warnings.js	/^var warnings = MessageBotExtension('warnings');$/;"	v

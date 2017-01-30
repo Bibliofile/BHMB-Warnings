@@ -1,8 +1,6 @@
 <style>
     #warnings_tab > div {
         display: none;
-        height: calc(100vh - 155px);
-        overflow-y: auto;
         background: #E7E7E7;
         padding: 5px;
     }
@@ -42,9 +40,6 @@
         background: #E7E7E7;
         color: #000;
     }
-    #warnings_tab [data-tab-name="settings"] input:not([type="checkbox"]) {
-        width: calc(100% - 20px);
-    }
 </style>
 
 <div id="warnings_tab">
@@ -55,7 +50,7 @@
     </nav>
     <div data-tab-name="info" class="visible">
         <p>Once a player reaches a specified number of warnings, they will automatically be banned. Staff cannot be warned.</p>
-        <h3>Commands Added</h3>
+        <h3 class="title">Commands Added</h3>
         <ul>
             <li>/WARNLEVEL - Lets a player check how many warnings they have.</li>
             <li>/WARN &lt;NAME&gt; - (staff only) Adds a warning to NAME and takes any actions specified at that warning level.</li>
@@ -64,31 +59,31 @@
         </ul>
     </div>
     <div data-tab-name="settings">
-        <h3>General</h3>
+        <h3 class="title">General</h3>
         <label data-setting-id="warn-kick">
             Kick user when warned:
-            <input type="checkbox">
+            <input class="checkbox" type="checkbox">
         </label><br>
         <label data-setting-id="threshold-ban">
             Warnings before ban:
-            <input type="number" min="1">
+            <input class="input" type="number" min="1">
         </label>
-        <h3>Responses</h3>
+        <h3 class="title">Responses</h3>
         <label data-setting-id="response-warnlevel">
             /WARNLEVEL
-            <input>
+            <input class="input">
         </label>
         <label data-setting-id="response-warn">
             /WARN - With warnings left
-            <input>
+            <input class="input">
         </label>
         <label data-setting-id="response-warn-ban">
             /WARN - When banned
-            <input>
+            <input class="input">
         </label>
         <label data-setting-id="response-set-warnings">
             /SET-WARNINGS
-            <input>
+            <input class="input">
         </label>
     </div>
     <div data-tab-name="log">

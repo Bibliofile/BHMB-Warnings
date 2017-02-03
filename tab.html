@@ -54,6 +54,7 @@
         <ul>
             <li>/WARNLEVEL - Lets a player check how many warnings they have.</li>
             <li>/WARN &lt;NAME&gt; - (staff only) Adds a warning to NAME and takes any actions specified at that warning level.</li>
+            <li>/UNWARN &lt;NAME&gt; - (staff only) Removes a warning from NAME. If NAME is banned, they will not be unbanned.</li>
             <li>/WARNLEVEL &lt;NAME&gt; - (staff only) Checks how many warnings NAME has.</li>
             <li>/SET-WARNINGS &lt;NUMBER&gt; &lt;NAME&gt; - (admin only) Sets NAME&apos;s warnings to NUMBER.</li>
         </ul>
@@ -83,6 +84,10 @@
         </label>
         <label data-setting-id="response-set-warnings">
             /SET-WARNINGS
+            <input class="input">
+        </label>
+        <label data-setting-id="response-unwarn">
+            /UNWARN
             <input class="input">
         </label>
     </div>

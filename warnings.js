@@ -24,18 +24,25 @@ var warnings = MessageBotExtension('warnings');
     };
 
     ex.tab = ui.addTab('Warnings');
-    ex.tab.innerHTML = '<style>#warnings_tab > div{display: none; background: #E7E7E7; padding: 5px;}#warnings_tab > div.visible{display: block;}#warnings_tab > nav{width: 100%; display: -webkit-box; display: -ms-flexbox; display: flex; -ms-flex-flow: row wrap; flex-flow: row wrap;}#warnings_tab > nav span{background: #182B73; color: #fff; height: 40px; display: -webkit-box; display: -ms-flexbox; display: flex; -webkit-box-align: center; -ms-flex-align: center; align-items: center; -webkit-box-pack: center; -ms-flex-pack: center; justify-content: center; -webkit-box-flex: 1; -ms-flex-positive: 1; flex-grow: 1; margin-top: 5px; margin-right: 5px; min-width: 120px;}#warnings_tab > nav span.selected{background: #E7E7E7; color: #000;}</style><div id="warnings_tab"> <nav> <span data-tab-name="info" class="selected">Info</span> <span data-tab-name="settings">Settings</span> <span data-tab-name="log">Log</span> </nav> <div data-tab-name="info" class="visible"> <p>Once a player reaches a specified number of warnings, they will automatically be banned. Staff cannot be warned.</p><h3 class="title">Commands Added</h3> <ul> <li>/WARNLEVEL - Lets a player check how many warnings they have.</li><li>/WARN &lt;NAME&gt; - (staff only) Adds a warning to NAME and takes any actions specified at that warning level.</li><li>/WARNLEVEL &lt;NAME&gt; - (staff only) Checks how many warnings NAME has.</li><li>/SET-WARNINGS &lt;NUMBER&gt; &lt;NAME&gt; - (admin only) Sets NAME&apos;s warnings to NUMBER.</li></ul> </div><div data-tab-name="settings"> <h3 class="title">General</h3> <label data-setting-id="warn-kick"> Kick user when warned: <input class="checkbox" type="checkbox"> </label><br><label data-setting-id="threshold-ban"> Warnings before ban: <input class="input" type="number" min="1"> </label> <h3 class="title">Responses</h3> <label data-setting-id="response-warnlevel"> /WARNLEVEL <input class="input"> </label> <label data-setting-id="response-warn"> /WARN - With warnings left <input class="input"> </label> <label data-setting-id="response-warn-ban"> /WARN - When banned <input class="input"> </label> <label data-setting-id="response-set-warnings"> /SET-WARNINGS <input class="input"> </label> </div><div data-tab-name="log"> <p>Commands used will be shown here. <a>Clear Log</a></p><ul style="list-style-type:none;"></ul> </div></div>';
+    ex.tab.innerHTML = '<style>#warnings_tab > div{display: none; background: #E7E7E7; padding: 5px;}#warnings_tab > div.visible{display: block;}#warnings_tab > nav{width: 100%; display: -webkit-box; display: -ms-flexbox; display: flex; -ms-flex-flow: row wrap; flex-flow: row wrap;}#warnings_tab > nav span{background: #182B73; color: #fff; height: 40px; display: -webkit-box; display: -ms-flexbox; display: flex; -webkit-box-align: center; -ms-flex-align: center; align-items: center; -webkit-box-pack: center; -ms-flex-pack: center; justify-content: center; -webkit-box-flex: 1; -ms-flex-positive: 1; flex-grow: 1; margin-top: 5px; margin-right: 5px; min-width: 120px;}#warnings_tab > nav span.selected{background: #E7E7E7; color: #000;}</style><div id="warnings_tab"> <nav> <span data-tab-name="info" class="selected">Info</span> <span data-tab-name="settings">Settings</span> <span data-tab-name="log">Log</span> </nav> <div data-tab-name="info" class="visible"> <p>Once a player reaches a specified number of warnings, they will automatically be banned. Staff cannot be warned.</p><h3 class="title">Commands Added</h3> <ul> <li>/WARNLEVEL - Lets a player check how many warnings they have.</li><li>/WARN &lt;NAME&gt; - (staff only) Adds a warning to NAME and takes any actions specified at that warning level.</li><li>/UNWARN &lt;NAME&gt; - (staff only) Removes a warning from NAME. If NAME is banned, they will not be unbanned.</li><li>/WARNLEVEL &lt;NAME&gt; - (staff only) Checks how many warnings NAME has.</li><li>/SET-WARNINGS &lt;NUMBER&gt; &lt;NAME&gt; - (admin only) Sets NAME&apos;s warnings to NUMBER.</li></ul> </div><div data-tab-name="settings"> <h3 class="title">General</h3> <label data-setting-id="warn-kick"> Kick user when warned: <input class="checkbox" type="checkbox"> </label><br><label data-setting-id="threshold-ban"> Warnings before ban: <input class="input" type="number" min="1"> </label> <h3 class="title">Responses</h3> <label data-setting-id="response-warnlevel"> /WARNLEVEL <input class="input"> </label> <label data-setting-id="response-warn"> /WARN - With warnings left <input class="input"> </label> <label data-setting-id="response-warn-ban"> /WARN - When banned <input class="input"> </label> <label data-setting-id="response-set-warnings"> /SET-WARNINGS <input class="input"> </label> <label data-setting-id="response-unwarn"> /UNWARN <input class="input"> </label> </div><div data-tab-name="log"> <p>Commands used will be shown here. <a>Clear Log</a></p><ul style="list-style-type:none;"></ul> </div></div>';
 
     var warnings = ex.storage.getObject('warnings_warns', {});
     var log = ex.storage.getObject('warnings_log', []);
     log.forEach(logMessage);
-    var settings = ex.storage.getObject('warnings_settings', {
+    var settings = ex.storage.getObject('warnings_settings', {});
+    var setting_defaults = {
         'threshold-ban': 5,
         'warn-kick': true,
         'response-warn': '{{Name}}, you have been warned for breaking the rules. Please behave yourself. If warned {{left}} more time(s) you will be banned.',
         'response-warn-ban': '{{Name}} has been banned after multiple warnings.',
         'response-warnlevel': 'Warnings for {{Name}}: {{amount}}',
-        'response-set-warnings': '{{Name}} set {{Target}}\'s warnings to {{amount}}.'
+        'response-set-warnings': '{{Name}} set {{Target}}\'s warnings to {{amount}}.',
+        'response-unwarn': 'Warning removed from {{Name}}, {{Name}} now has {{left}} warnings.'
+    };
+    Object.keys(setting_defaults).forEach(function(key) {
+        if (typeof settings[key] != typeof setting_defaults[key]) {
+            settings[key] = setting_defaults[key];
+        }
     });
 
     var warningHelper = {
@@ -52,6 +59,11 @@ var warnings = MessageBotExtension('warnings');
                 warnings[name] = 1;
             }
             save();
+        },
+        removeWarning: function(name) {
+            if (warnings[name] && warnings[name] > 0) {
+                warnings[name]--;
+            }
         },
         setWarnings: function(name, number) {
             warnings[name.toLocaleUpperCase()] = number;
@@ -168,6 +180,16 @@ var warnings = MessageBotExtension('warnings');
             sendHelper(settings['response-warnlevel'], {
                 amount: warningHelper.getWarns(args),
             }, args);
+
+        } else if (command == 'unwarn') {
+            if (!warningHelper.canWarn(args)) {
+                return;
+            }
+
+            logMessage(name + ' unwarned ' + args);
+            warningHelper.removeWarning(args);
+
+            sendHelper(settings['response-unwarn'], {left: warningHelper.getWarns(args)}, args);
 
         } else if (command == 'warn') {
 

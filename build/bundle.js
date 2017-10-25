@@ -22,7 +22,7 @@ const warningsKey = 'warns';
 const logKey = 'log';
 const settingsKey = 'settings';
 const commands = ['warn', 'unwarn', 'warnlevel', 'set-warnings'];
-bot.MessageBot.registerExtension('bibliofile/starter', (ex, world) => {
+bot.MessageBot.registerExtension('bibliofile/warnings', (ex, world) => {
     const getWarnings = () => ex.storage.get(warningsKey, {});
     const getLog = () => ex.storage.get(logKey, []);
     const getSettings = () => mergeByType({

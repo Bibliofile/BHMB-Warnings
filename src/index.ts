@@ -95,7 +95,7 @@ MessageBot.registerExtension('bibliofile/warnings', (ex, world) => {
 
     logMessage(`${player.name} unwarned ${target.name}`)
     ex.storage.with<Warns>(warningsKey, {}, warns => {
-      warns[target.name] = warns[target.name]-- || 0
+      warns[target.name] = warns[target.name] > 0 ? warns[target.name] - 1 : 0
     })
 
     ex.bot.send(getSettings()['response-unwarn'], {
@@ -129,7 +129,7 @@ MessageBot.registerExtension('bibliofile/warnings', (ex, world) => {
 
     let settings = getSettings()
     ex.bot.send(settings['response-set-warnings'], {
-      Target: target.name[0] + target.name[0].toLocaleLowerCase(),
+      Target: target.name[0] + target.name.slice(1).toLocaleLowerCase(),
       TARGET: target.name,
       target: target.name.toLocaleLowerCase(),
       amount: '' + amount,

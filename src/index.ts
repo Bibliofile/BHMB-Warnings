@@ -70,7 +70,7 @@ MessageBot.registerExtension('bibliofile/warnings', (ex, world) => {
     logMessage(`${player.name} warned ${args}`)
 
     ex.storage.with<Warns>(warningsKey, {}, warnings => {
-      warnings[target.name] = warnings[target.name]++ || 1
+      warnings[target.name] = (warnings[target.name] || 0) + 1
     })
     let warnings = getWarns(target)
 
@@ -167,13 +167,13 @@ MessageBot.registerExtension('bibliofile/warnings', (ex, world) => {
 
     switch (input.type) {
       case 'checkbox':
-        input.checked = settings[label.dataset.settingId] || false;
-        break;
+        input.checked = settings[label.dataset.settingId] || false
+        break
       case 'number':
-        input.value = settings[label.dataset.settingId] || 0;
-        break;
+        input.value = settings[label.dataset.settingId] || 0
+        break
       default:
-        input.value = settings[label.dataset.settingId] || '';
+        input.value = settings[label.dataset.settingId] || ''
     }
   })
 
@@ -185,16 +185,16 @@ MessageBot.registerExtension('bibliofile/warnings', (ex, world) => {
       switch (input.type) {
         case 'checkbox':
           settings[label.dataset.settingId] = input.checked
-          break;
+          break
         case 'number':
           settings[label.dataset.settingId] = +input.value
-          break;
+          break
         default:
           settings[label.dataset.settingId] = input.value
       }
     })
     ex.storage.set('settings', settings)
-  });
+  })
 
   // Init log
   getLog().forEach(function (line) {

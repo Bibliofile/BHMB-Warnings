@@ -4,11 +4,11 @@
 	(factory(global['@bhmb/bot']));
 }(this, (function (bot) { 'use strict';
 
-var commandsHtml = "<div class=\"container is-fluid\">\r\n  <p>Once a player reaches a specified number of warnings, they will automatically be banned. Staff cannot be warned.</p>\r\n  <h3 class=\"title\">Commands Added</h3>\r\n  <ul>\r\n    <li>/WARNLEVEL - Lets a player check how many warnings they have.</li>\r\n    <li>/WARN &lt;NAME&gt; - (staff only) Adds a warning to NAME and takes any actions specified at that warning level.</li>\r\n    <li>/UNWARN &lt;NAME&gt; - (staff only) Removes a warning from NAME. If NAME is banned, they will not be unbanned.</li>\r\n    <li>/WARNLEVEL &lt;NAME&gt; - (staff only) Checks how many warnings NAME has.</li>\r\n    <li>/SET-WARNINGS &lt;NUMBER&gt; &lt;NAME&gt; - (admin only) Sets NAME&apos;s warnings to NUMBER.</li>\r\n  </ul>\r\n</div>\r\n";
+var commandsHtml = "<div class=\"container is-fluid\">\n  <p>Once a player reaches a specified number of warnings, they will automatically be banned. Staff cannot be warned.</p>\n  <h3 class=\"title\">Commands Added</h3>\n  <ul>\n    <li>/WARNLEVEL - Lets a player check how many warnings they have.</li>\n    <li>/WARN &lt;NAME&gt; - (staff only) Adds a warning to NAME and takes any actions specified at that warning level.</li>\n    <li>/UNWARN &lt;NAME&gt; - (staff only) Removes a warning from NAME. If NAME is banned, they will not be unbanned.</li>\n    <li>/WARNLEVEL &lt;NAME&gt; - (staff only) Checks how many warnings NAME has.</li>\n    <li>/SET-WARNINGS &lt;NUMBER&gt; &lt;NAME&gt; - (admin only) Sets NAME&apos;s warnings to NUMBER.</li>\n  </ul>\n</div>\n";
 
-var settingsHtml = "<div class=\"container is-fluid\">\r\n  <h3 class=\"title\">General</h3>\r\n  <label data-setting-id=\"warn-kick\">\r\n    Kick user when warned:\r\n    <input class=\"checkbox\" type=\"checkbox\">\r\n  </label>\r\n  <br>\r\n  <label data-setting-id=\"threshold-ban\">\r\n    Warnings before ban:\r\n    <input class=\"input\" type=\"number\" min=\"1\">\r\n  </label>\r\n  <h3 class=\"title\">Responses</h3>\r\n  <label data-setting-id=\"response-warnlevel\">\r\n    /WARNLEVEL\r\n    <input class=\"input\">\r\n  </label>\r\n  <label data-setting-id=\"response-warn\">\r\n    /WARN - With warnings left\r\n    <input class=\"input\">\r\n  </label>\r\n  <label data-setting-id=\"response-warn-ban\">\r\n    /WARN - When banned\r\n    <input class=\"input\">\r\n  </label>\r\n  <label data-setting-id=\"response-set-warnings\">\r\n    /SET-WARNINGS\r\n    <input class=\"input\">\r\n  </label>\r\n  <label data-setting-id=\"response-unwarn\">\r\n    /UNWARN\r\n    <input class=\"input\">\r\n  </label>\r\n</div>";
+var settingsHtml = "<div class=\"container is-fluid\">\n  <h3 class=\"title\">General</h3>\n  <label data-setting-id=\"warn-kick\">\n    Kick user when warned:\n    <input class=\"checkbox\" type=\"checkbox\">\n  </label>\n  <br>\n  <label data-setting-id=\"threshold-ban\">\n    Warnings before ban:\n    <input class=\"input\" type=\"number\" min=\"1\">\n  </label>\n  <h3 class=\"title\">Responses</h3>\n  <label data-setting-id=\"response-warnlevel\">\n    /WARNLEVEL\n    <input class=\"input\">\n  </label>\n  <label data-setting-id=\"response-warn\">\n    /WARN - With warnings left\n    <input class=\"input\">\n  </label>\n  <label data-setting-id=\"response-warn-ban\">\n    /WARN - When banned\n    <input class=\"input\">\n  </label>\n  <label data-setting-id=\"response-set-warnings\">\n    /SET-WARNINGS\n    <input class=\"input\">\n  </label>\n  <label data-setting-id=\"response-unwarn\">\n    /UNWARN\n    <input class=\"input\">\n  </label>\n</div>";
 
-var logHtml = "<div class=\"container is-fluid\">\r\n  <p>Commands used will be shown here.\r\n    <a>Clear Log</a>\r\n  </p>\r\n  <ul style=\"list-style-type:none;\"></ul>\r\n</div>";
+var logHtml = "<div class=\"container is-fluid\">\n  <p>Commands used will be shown here.\n    <a>Clear Log</a>\n  </p>\n  <ul style=\"list-style-type:none;\"></ul>\n</div>";
 
 function mergeByType(target, extra) {
     Object.keys(extra).forEach(key => {
@@ -45,7 +45,7 @@ bot.MessageBot.registerExtension('bibliofile/warnings', (ex, world) => {
         let settings = getSettings();
         logMessage(`${player.name} warned ${args}`);
         ex.storage.with(warningsKey, {}, warnings => {
-            warnings[target.name] = warnings[target.name]++ || 1;
+            warnings[target.name] = (warnings[target.name] || 0) + 1;
         });
         let warnings = getWarns(target);
         // What message to send?
